@@ -16,7 +16,7 @@ func InitDB(dsn string) {
 	var errDB error
 	DB, errDB = gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if errDB != nil {
-		log.Fatal("Failed to connect to database:", errDB)
+		log.Fatal("Failed to connect to database:\n", errDB)
 	}
 
 	DB.AutoMigrate(&models.Restaurant{}) // Auto-migrate tables

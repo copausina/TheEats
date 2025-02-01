@@ -13,14 +13,17 @@ import (
 	"github.com/joho/godotenv"
 )
 
-func main() {
-	r := gin.Default()
-	r.SetTrustedProxies([]string{"127.0.0.1"}) //only trust localhost for now
-
+func init() {
+	// load enviroment variables
 	err := godotenv.Load()
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
+}
+
+func main() {
+	r := gin.Default()
+	r.SetTrustedProxies([]string{"127.0.0.1"}) //only trust localhost for now
 
 	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable",
 		os.Getenv("DB_HOST"), os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_NAME"), os.Getenv("DB_PORT"))

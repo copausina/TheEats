@@ -1,7 +1,9 @@
 package models
 
+import "gorm.io/gorm"
+
 type Restaurant struct {
-	ID       uint    `json:"id" gorm:"primaryKey"`
+	gorm.Model
 	Name     string  `json:"name" gorm:"not null"`
 	Location string  `json:"location"`
 	Cuisine  string  `json:"cuisine"`
