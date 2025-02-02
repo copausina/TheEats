@@ -19,7 +19,9 @@ func InitDB(dsn string) {
 		log.Fatal("Failed to connect to database:\n", errDB)
 	}
 
-	DB.AutoMigrate(&models.Restaurant{}) // Auto-migrate tables
+	// Auto-migrate tables (should be a line for each model)
+	DB.AutoMigrate(&models.Restaurant{})
+	DB.AutoMigrate(&models.User{})
 }
 
 // GetDB returns the database instance
