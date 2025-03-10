@@ -1,0 +1,56 @@
+/* Make the navbar span the full width */
+.navbar {
+  width: 100%;
+  position: fixed; /* Keep it at the top */
+  top: 0;
+  left: 0;
+  background-color: #333; /* Dark background */
+  color: white;
+  padding: 15px 20px;
+  z-index: 1000; /* Ensure it stays above other elements */
+}
+
+/* Flexbox for horizontal alignment */
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px; /* Limit max width */
+  margin: 0 auto; /* Center content */
+  padding: 0 10px; /* Add horizontal padding */
+  height: 50px;
+}
+
+/* Style the logo */
+.logo {
+  font-weight: bold;
+}
+
+/* Style the navigation links */
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  padding: 0 15px; /* Add horizontal padding */
+}
+
+.nav-links li {
+  display: inline;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+  transition: color 0.3s ease-in-out;
+  padding: 10px 15px; /* Add padding inside the links */
+}
+
+.nav-links a:hover {
+  color: #ff2600; /* Highlight on hover */
+}
+
+/* Add space to prevent content from being hidden under navbar */
+body {
+  padding-top: 60px;
+}

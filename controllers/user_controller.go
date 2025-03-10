@@ -87,7 +87,7 @@ func Login(c *gin.Context) {
 	}
 
 	c.SetSameSite(http.SameSiteLaxMode)
-	c.SetCookie("auhthorization", token, 86400, "/", "", false, true) // 86400 = 24 hours
+	c.SetCookie("authorization", token, 86400, "/", "", false, true) // 86400 = 24 hours
 
 	c.JSON(http.StatusOK, gin.H{"message": "Login successful"})
 }
@@ -96,6 +96,28 @@ func Login(c *gin.Context) {
 func Logout(c *gin.Context) {
 	c.SetCookie("token", "", -1, "/", "", false, true)
 	c.JSON(http.StatusOK, gin.H{"message": "Logged out successfully"})
+}
+
+// Check if user is logged in, same(ish) as UserMiddleware in auth.go
+func CheckAuth(c *gin.Context) {
+	token, err := c.Cookie("authorization") // Read the cookie
+	if err != nil {
+		c.JSON(http.StatusUnauthorized, gin.H{"authenticated": false})
+		return
+	}
+
+	// Parse and validate the JWT token
+	claims := jwt.MapClaims{}
+	_, err = jwt.ParseWithClaims(token, claims, func(token *jwt.Token) (interface{}, error) {
+		return jwtSecret, nil
+	})
+
+	if err != nil {
+		c.JSON(http.StatusUnauthorized, gin.H{"authenticated": false})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"authenticated": true})
 }
 
 // Get all users

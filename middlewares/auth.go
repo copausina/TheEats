@@ -16,7 +16,7 @@ func UserMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		tokenString, err := c.Cookie("auhthorization")
 		if err != nil {
-			c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized: No auhthorization token provided"})
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized: No authorization token provided"})
 			c.Abort()
 			return
 		}
@@ -28,7 +28,7 @@ func UserMiddleware() gin.HandlerFunc {
 		})
 
 		if err != nil || !token.Valid {
-			c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized: Invalid auhthorization token"})
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized: Invalid authorization token"})
 			c.Abort()
 			return
 		}
