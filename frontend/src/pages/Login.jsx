@@ -12,6 +12,9 @@ function Login() {
     e.preventDefault();
     try {
       await login(email, password);
+      localStorage.setItem("isAuthenticated", "true");
+      // Trigger storage event so other components (i.e. navbar) update
+      window.dispatchEvent(new Event("storage")); 
       navigate("/"); // Redirect to home
     } catch (err) {
       setError(err.error || "Invalid login credentials");

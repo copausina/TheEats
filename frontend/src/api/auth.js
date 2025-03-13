@@ -1,4 +1,4 @@
-import axios from "../api/axiosInstance";
+import { publicApi, authApi } from "../api/axiosInstance";
 
 // Set default API base URL
 const API_URL = "http://localhost:8080/auth";
@@ -6,7 +6,7 @@ const API_URL = "http://localhost:8080/auth";
 // Register new user
 export const register = async (email, password) => {
   try {
-    const response = await axios.post(`${API_URL}/register`, {
+    const response = await publicApi.post(`${API_URL}/register`, {
       email,
       password,
     });
@@ -19,7 +19,7 @@ export const register = async (email, password) => {
 // Login user
 export const login = async (email, password) => {
   try {
-    const response = await axios.post(`${API_URL}/login`, {
+    const response = await publicApi.post(`${API_URL}/login`, {
       email,
       password,
     }, { withCredentials: true }); // Send cookies
@@ -33,7 +33,7 @@ export const login = async (email, password) => {
 // Logout user
 export const logout = async () => {
   try {
-    await axios.post(`${API_URL}/logout`, {}, { withCredentials: true });
+    await authApi.post(`${API_URL}/logout`, {}, { withCredentials: true });
   } catch (error) {
     console.error("Logout failed", error);
   }

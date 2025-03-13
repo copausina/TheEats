@@ -1,27 +1,31 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { logout } from "../api/auth"; 
-import axiosInstance from "../api/axiosInstance"
+import { publicApi, authApi } from "../api/axiosInstance"
 import "./Navbar.css";
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const [isAuthenticated, setIsAuthenticated] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(localStorage.getItem("isAuthenticated") === "true");
 
   useEffect(() => {
-    // Call backend to check authentication
-    axiosInstance.get("http://localhost:8080/auth/check", { withCredentials: true })
-      .then(response => {
-        setIsAuthenticated(response.data.authenticated);
-      })
-      .catch(() => {
-        setIsAuthenticated(false);
-      });
+    // Function to check auth status
+    const checkAuth = () => {
+      setIsAuthenticated(localStorage.getItem("isAuthenticated") === "true");
+    };
+  
+    checkAuth(); // Run once on mount
+  
+    // Listen for storage changes (i.e. login from Login.jsx page)
+    window.addEventListener("storage", checkAuth);
+  
+    return () => window.removeEventListener("storage", checkAuth); // Cleanup
   }, []);
 
   const handleLogout = async () => {
     await logout();
     setIsAuthenticated(false); // Update state
+    localStorage.setItem("isAuthenticated", "false"); // For conditional rendering
     navigate("/login"); // Redirect to login
   };
   

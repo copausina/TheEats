@@ -13,6 +13,7 @@ func SetupRoutes(router *gin.Engine) {
 		authRoutes.POST("/login", controllers.Login)
 		authRoutes.POST("/logout", controllers.Logout)
 		authRoutes.GET("/check", controllers.CheckAuth)
+		authRoutes.POST("/refresh", controllers.RefreshToken)
 		//authRoutes.Use(middlewares.AdminMiddleware()) // Require admin access
 		authRoutes.GET("/", controllers.GetUsers) // Only admins
 	}

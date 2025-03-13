@@ -14,10 +14,19 @@ var jwtSecret = []byte(os.Getenv("JWT_SECRET"))
 // Middleware to verify user authentication from a cookie
 func UserMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		tokenString, err := c.Cookie("auhthorization")
-		if err != nil {
-			c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized: No authorization token provided"})
-			c.Abort()
+		// Extract the token from the Authorization header
+		authHeader := c.GetHeader("Authorization")
+		if authHeader == "" {
+			c.JSON(http.StatusUnauthorized, gin.H{"authenticated": false, "error": "No token provided"})
+			return
+		}
+
+		// Bearer token format: "Bearer <token>", so we need to extract the token
+		tokenString := ""
+		if len(authHeader) > 7 && authHeader[:7] == "Bearer " {
+			tokenString = authHeader[7:] // Extract the actual token
+		} else {
+			c.JSON(http.StatusUnauthorized, gin.H{"authenticated": false, "error": "Invalid token format"})
 			return
 		}
 
@@ -44,9 +53,9 @@ func UserMiddleware() gin.HandlerFunc {
 // Middleware to check if user is an admin
 func AdminMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		tokenString, err := c.Cookie("auhthorization")
+		tokenString, err := c.Cookie("authorization")
 		if err != nil {
-			c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized: No auhthorization token provided"})
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized: No authorization token provided"})
 			c.Abort()
 			return
 		}
@@ -58,7 +67,7 @@ func AdminMiddleware() gin.HandlerFunc {
 		})
 
 		if err != nil || !token.Valid {
-			c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized: Invalid auhthorization token"})
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized: Invalid authorization token"})
 			c.Abort()
 			return
 		}
