@@ -35,6 +35,7 @@ const Navbar = () => {
         <h1 className="logo">TheEats</h1>
         <ul className="nav-links">
           <li><Link to="/">Home</Link></li>
+          <li><Link to="/restaurants">Restaurants</Link></li>
           {!isAuthenticated ? (
             <>
               <li><Link to="/login">Login</Link></li>

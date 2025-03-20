@@ -1,0 +1,35 @@
+.restaurant-card {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    color: black;
+    border-radius: 8px;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+    padding: 16px;
+    max-width: 600px;
+    margin: 10px auto;
+  }
+  
+  .restaurant-card img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-right: 16px;
+  }
+  
+  .restaurant-card .info {
+    flex: 1;
+  }
+  
+  .restaurant-card h3 {
+    margin: 0;
+    font-size: 1.5rem;
+  }
+  
+  .restaurant-card p {
+    margin: 5px 0;
+    font-size: 1rem;
+    color: #555;
+  }
+  

@@ -28,5 +28,6 @@ func SetupRoutes(router *gin.Engine) {
 
 		restaurantRoutes.Use(middlewares.AdminMiddleware())           // Require admin access
 		restaurantRoutes.DELETE("/:id", controllers.DeleteRestaurant) // Only admins
+		restaurantRoutes.POST("/upload-restaurant-image", controllers.UploadRestaurantImageHandler)
 	}
 }

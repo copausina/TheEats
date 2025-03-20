@@ -1,13 +1,13 @@
 package main
 
 import (
-	//"net/http"
 	"fmt"
 	"log"
 	"os"
 	"time"
 
 	"github.com/copausina/TheEats/db"
+	"github.com/copausina/TheEats/handlers"
 	"github.com/copausina/TheEats/routes"
 
 	"github.com/gin-contrib/cors"
@@ -36,7 +36,8 @@ func main() {
 
 	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable",
 		os.Getenv("DB_HOST"), os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_NAME"), os.Getenv("DB_PORT"))
-	db.InitDB(dsn)        // Connect database
+	db.InitDB(dsn) // Connect database
+	handlers.InitSupabase()
 	routes.SetupRoutes(r) // Setup API routes
 
 	r.Run(":8080") // Start server
