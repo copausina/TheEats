@@ -1,13 +1,13 @@
 import "./RestaurantCard.css";
 
-const RestaurantCard = ({ name, imageUrl, cuisine, location, rating}) => {
+const RestaurantCard = ({ name, imageurl, cuisine, address, rating}) => { //these names are NOT case-sensitive
   return (
     <div className="restaurant-card">
-      <img src={imageUrl} alt={name} />
+      <img src={imageurl} alt={name} />
       <div className="info">
         <h3>{name}</h3>
         <p>{cuisine}</p>
-        <p>{location}</p>
+        <p>{address}</p>
         <p>⭐{rating}</p>
       </div>
     </div>

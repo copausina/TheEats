@@ -77,16 +77,17 @@ const RestaurantIndex = () => {
         <button className="add-button" onClick={toggleModal}>Add Restaurant</button>
       </div>
       <div className="restaurant-grid">
-        {restaurants.map((restaurant) => (
+      {restaurants.map((restaurant) => (
           <RestaurantCard
-            key={restaurant.ID} // gorm.Model calls it "ID" NOT "id"
+            key={restaurant.ID}
             name={restaurant.name}
-            imageUrl={restaurant.imageUrl}
+            imageurl={restaurant.imageurl}
             cuisine={restaurant.cuisine}
-            location={restaurant.location}
+            address={restaurant.address}
             rating={restaurant.rating}
           />
-        ))}
+        )
+      )}
       </div>
 
       {/* Add restaurant pop-up */}
