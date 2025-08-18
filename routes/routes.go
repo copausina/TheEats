@@ -25,6 +25,7 @@ func SetupRoutes(router *gin.Engine) {
 
 		restaurantRoutes.Use(middlewares.UserMiddleware())    // Require login
 		restaurantRoutes.POST("/", controllers.AddRestaurant) // Only logged-in users
+		restaurantRoutes.PUT("/:id", controllers.UpdateRestaurant)
 
 		restaurantRoutes.Use(middlewares.AdminMiddleware())           // Require admin access
 		restaurantRoutes.DELETE("/:id", controllers.DeleteRestaurant) // Only admins

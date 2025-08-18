@@ -126,17 +126,25 @@ func UpdateRestaurant(c *gin.Context) {
 
 	// Get image file
 	file, err := c.FormFile("image")
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Image is required"}) // TODO: make not required later
-		return
+	if err == nil { // If new image was provided
+		// Open file to get multipart.File
+		fileData, err := file.Open()
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to open image file"})
+			return
+		}
+		defer fileData.Close()
+
+		// Upload the image and get the URL
+		imageURL, err := handlers.UploadRestaurantImage(fileData, name) // image filename will be same as name of restaurant
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to upload image"})
+			return
+		}
+
+		// Update the restaurant with the image URL
+		restaurant.ImageURL = imageURL
 	}
-	// Open file to get multipart.File
-	fileData, err := file.Open()
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to open image file"})
-		return
-	}
-	defer fileData.Close()
 
 	// Before images were implemented
 	// // Bind new data

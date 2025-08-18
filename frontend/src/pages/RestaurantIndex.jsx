@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import RestaurantCard from "../components/RestaurantCard";
 import "./RestaurantIndex.css";
-import { authApi } from "../api/axiosInstance";
+import { publicApi, authApi} from "../api/axiosInstance";
+import RestaurantFormModal from "../components/RestaurantFormModal";
 
 const RestaurantIndex = () => {
   const [restaurants, setRestaurants] = useState([]);
@@ -19,6 +20,10 @@ const RestaurantIndex = () => {
     setShowModal(!showModal);
   };
 
+  const handleModalClose = () => {
+    setShowModal(false);
+  };
+
   // Handle form changes
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -31,8 +36,8 @@ const RestaurantIndex = () => {
   };
 
   // Handle form submission
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async (formData) => {
+    // e.preventDefault(); // Handled in RestaurantFormModal
   
     // Prepare form data
     const data = new FormData();
@@ -64,7 +69,7 @@ const RestaurantIndex = () => {
 
   useEffect(() => {
     // Fetch restaurants from backend
-    authApi
+    publicApi
       .get("/api/restaurants/") // The trailing backslash is important!
       .then((response) => setRestaurants(response.data))
       .catch((error) => console.error("Error fetching restaurants:", error));
@@ -79,7 +84,8 @@ const RestaurantIndex = () => {
       <div className="restaurant-grid">
       {restaurants.map((restaurant) => (
           <RestaurantCard
-            key={restaurant.ID}
+            key={restaurant.ID}  
+            id={restaurant.ID}
             name={restaurant.name}
             imageurl={restaurant.imageurl}
             cuisine={restaurant.cuisine}
@@ -90,8 +96,16 @@ const RestaurantIndex = () => {
       )}
       </div>
 
-      {/* Add restaurant pop-up */}
       {showModal && (
+        <RestaurantFormModal
+            show={showModal}
+            onClose={toggleModal}
+            isEdit={false}
+            onSubmit={handleSubmit}/>
+       )}
+
+      {/* Add restaurant pop-up */}
+      {/* {showModal && (
         <div className="modal-overlay">
           <div className="modal">
             <h2>Add a New Restaurant</h2>
@@ -112,7 +126,7 @@ const RestaurantIndex = () => {
             </form>
           </div>
         </div>
-      )}
+      )} */}
     </div>
   );
 };

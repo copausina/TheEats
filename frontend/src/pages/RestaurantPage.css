@@ -1,0 +1,8 @@
+.restaurant-detail img {
+  max-width: 400px;  /* limit width */
+  max-height: 300px; /* limit height */
+  width: 100%;       /* scale down responsively */
+  height: auto;      /* maintain aspect ratio */
+  object-fit: cover; /* optional: crop instead of squish */
+  border-radius: 8px; /* optional styling */
+}

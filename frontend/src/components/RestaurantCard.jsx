@@ -1,16 +1,17 @@
+import { Link } from "react-router-dom";
 import "./RestaurantCard.css";
 
-const RestaurantCard = ({ name, imageurl, cuisine, address, rating}) => { //these names are NOT case-sensitive
+const RestaurantCard = ({ id, name, imageurl, cuisine, address, rating}) => { //these names are NOT case-sensitive
   return (
-    <div className="restaurant-card">
+    <Link to={`/restaurants/${id}`} className="restaurant-card">
       <img src={imageurl} alt={name} />
       <div className="info">
         <h3>{name}</h3>
         <p>{cuisine}</p>
         <p>{address}</p>
-        <p>⭐{rating}</p>
+        <p>⭐ {rating}</p>
       </div>
-    </div>
+    </Link>
   );
 };
 

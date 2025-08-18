@@ -72,8 +72,7 @@ func DeleteRestaurantImage(name []string) (string, error) {
 	name[0] = fmt.Sprintf("restaurant/%s", name[0]) // prepend path inside the bucket
 	fmt.Println("Paths to delete:", name)
 
-	resp, err := storageClient.RemoveFile(bucketName, name)
-	println(resp[0].Key, resp[0].Error, resp[0].Message)
+	_, err := storageClient.RemoveFile(bucketName, name)
 	if err != nil {
 		return "", fmt.Errorf("failed to delete image(s): %w", err)
 	}
